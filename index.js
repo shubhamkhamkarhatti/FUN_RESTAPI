@@ -2,18 +2,13 @@ const express = require("express")
 const morgan = require("morgan")
 const createError = require("http-errors")
 require("dotenv").config()
+const funAPI = require("./routes/login-registration-route")
+
 const app = express()
 const port = process.env.PORT || 3000
-
 app.use(morgan('dev'))
 
-app.get('/funapi',(req, res)=>{
-    res.send("First message from API..")
-})
-
-app.get('/',(req, res)=>{
-    res.send("Main Api of the FUNAPI..")
-})
+app.use('/funapi',funAPI)
 
 // Error handling 
 app.use((req, res, next)=>{
