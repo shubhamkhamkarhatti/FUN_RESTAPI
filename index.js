@@ -4,9 +4,11 @@ const createError = require("http-errors")
 require("dotenv").config()
 const funAPI = require("./routes/login-registration-route")
 
+require("./config/dbConfig")
 const app = express()
 const port = process.env.PORT || 3000
 app.use(morgan('dev'))
+app.use(express.json())
 
 app.use('/funapi',funAPI)
 
