@@ -2,6 +2,7 @@ const express = require("express")
 const createError = require("http-errors")
 const route = express.Router()
 const User = require("../models/user_model")
+const auth = require("../auth_token/token_config")
 
 route.get('/', async (req, res, next) => {
     res.send("Main Page")
@@ -21,7 +22,9 @@ route.post('/register', async (req, res, next) => {
         if (doesExist) throw createError.Conflict("User already exists!!")
         const newUser = await User({ email: email, password: password })
         await newUser.save()
-        res.send("Registered Successfully..")
+        const acctoken = await auth.signAccessToken(email)
+        console.log(acctoken)
+        res.send(acctoken)
     } catch (error) {
         next(error)
     }
